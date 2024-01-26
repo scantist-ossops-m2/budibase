@@ -1589,7 +1589,7 @@
         "required": true
       },
       {
-        "type": "multifield",
+        "type": "chartmultifield",
         "label": "Data columns",
         "key": "valueColumns",
         "dependsOn": "dataProvider",
@@ -2068,8 +2068,8 @@
         "required": true
       },
       {
-        "type": "field",
-        "label": "Data columns",
+        "type": "chartfield",
+        "label": "Data column",
         "key": "valueColumn",
         "dependsOn": "dataProvider",
         "required": true
