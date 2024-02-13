@@ -2,9 +2,8 @@
 
 const start = Date.now()
 
-const { glob } = require("glob")
 const fs = require("fs")
-const { copyFile, mkdir } = require('node:fs/promises');
+const { readdir, copyFile, mkdir } = require('node:fs/promises');
 const path = require("path")
 
 const { build } = require("esbuild")
@@ -15,12 +14,12 @@ const {
 } = require("@esbuild-plugins/tsconfig-paths")
 const { nodeExternalsPlugin } = require("esbuild-node-externals")
 
-let svelteCompilePlugin = {
+const svelteCompilePlugin = {
   name: 'svelteCompile',
   setup(build) {
     // This resolve handler is necessary to bundle the svelte runtime into the the final output,
     // otherwise it will try to resolve it at run time.
-    build.onResolve({ filter: /svelte\/internal/ }, async (args) => {
+    build.onResolve({ filter: /svelte\/internal/ }, async () => {
       return { path: `${process.cwd()}/../../node_modules/svelte/src/runtime/internal/ssr.js` }
     })
 
@@ -103,7 +102,8 @@ async function runBuild(entry, outfile) {
   await mkdir('dist', { recursive: true });
 
   const hbsFiles = (async () => {
-    const files = await glob('src/**/*.hbs');
+    const dir = await readdir('./', { recursive: true });
+    const files = dir.filter(entry => entry.endsWith('.hbs'));
     const fileCopyPromises = files.map(file => copyFile(file, `dist/${path.basename(file)}`))
 
     await Promise.all(fileCopyPromises)
