@@ -1,6 +1,6 @@
 import { InvalidFileExtensions } from "@budibase/shared-core"
 
-require("svelte/register")
+import AppComponent from "./templates/BudibaseApp.svelte"
 
 import { join } from "../../../utilities/centralPath"
 import * as uuid from "uuid"
@@ -169,15 +169,14 @@ export const serveApp = async function (ctx: Ctx) {
 
     if (!env.isJest()) {
       const plugins = objectStore.enrichPluginURLs(appInfo.usedPlugins)
-      const App = require("./templates/BudibaseApp.svelte").default
-      const { head, html, css } = App.render({
+      const { head, html, css } = AppComponent.render({
+        test: "SOME TEST STUFF",
         metaImage:
           branding?.metaImageUrl ||
           "https://res.cloudinary.com/daog6scxm/image/upload/v1698759482/meta-images/plain-branded-meta-image-coral_ocxmgu.png",
         metaDescription: branding?.metaDescription || "",
         metaTitle:
           branding?.metaTitle || `${appInfo.name} - built with Budibase`,
-        title: appInfo.name,
         production: env.isProd(),
         appId,
         clientLibPath: objectStore.clientLibraryUrl(appId!, appInfo.version),
@@ -200,33 +199,14 @@ export const serveApp = async function (ctx: Ctx) {
         appId,
         embedded: bbHeaderEmbed,
       })
+
+      console.log(css)
     } else {
       // just return the app info for jest to assert on
       ctx.body = appInfo
     }
   } catch (error) {
-    if (!env.isJest()) {
-      const App = require("./templates/BudibaseApp.svelte").default
-      const { head, html, css } = App.render({
-        title: branding?.metaTitle,
-        metaTitle: branding?.metaTitle,
-        metaImage:
-          branding?.metaImageUrl ||
-          "https://res.cloudinary.com/daog6scxm/image/upload/v1698759482/meta-images/plain-branded-meta-image-coral_ocxmgu.png",
-        metaDescription: branding?.metaDescription || "",
-        favicon:
-          branding.faviconUrl !== ""
-            ? objectStore.getGlobalFileUrl("settings", "faviconUrl")
-            : "",
-      })
-
-      const appHbs = loadHandlebarsFile(appHbsPath)
-      ctx.body = await processString(appHbs, {
-        head,
-        body: html,
-        style: css.code,
-      })
-    }
+    console.log(error)
   }
 }
 

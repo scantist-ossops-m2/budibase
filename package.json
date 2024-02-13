@@ -14,6 +14,7 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-local-rules": "^2.0.0",
     "eslint-plugin-svelte": "^2.34.0",
+    "glob": "^10.3.10",
     "husky": "^8.0.3",
     "kill-port": "^1.6.1",
     "lerna": "7.1.1",
@@ -22,7 +23,7 @@
     "nx-cloud": "16.0.5",
     "prettier": "2.8.8",
     "prettier-plugin-svelte": "^2.3.0",
-    "svelte": "3.49.0",
+    "svelte": "^4.2.10",
     "svelte-eslint-parser": "^0.33.1",
     "typescript": "5.2.2",
     "yargs": "^17.7.2"
