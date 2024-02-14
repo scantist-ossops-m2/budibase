@@ -9,7 +9,6 @@
   export let clientLibPath
   export let usedPlugins
   export let appMigrating
-  export let test
 </script>
 
 <svelte:head>
@@ -96,7 +95,7 @@
   </style>
 </svelte:head>
 
-<div>
+<body id="app">
   <div id="error">
     {#if clientLibPath}
       <h1>There was an error loading your app</h1>
@@ -134,4 +133,4 @@
       document.getElementById("error").style.display = "flex"
     }
   </script>
-</div>
+</body>
