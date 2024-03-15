@@ -1,6 +1,10 @@
 #!/bin/sh
 
-packages_to_remove="@budibase/backend-core @budibase/bbui @budibase/builder @budibase/cli @budibase/client @budibase/frontend-core @budibase/pro @budibase/sdk @budibase/server @budibase/shared-core @budibase/string-templates @budibase/types @budibase/worker"
+packages_to_remove="@budibase/backend-core @budibase/bbui @budibase/builder @budibase/cli @budibase/client @budibase/frontend-core @budibase/sdk @budibase/server @budibase/shared-core @budibase/string-templates @budibase/types @budibase/worker"
+
+if [[ -n "$(ls -A packages/pro/src)" ]]; then
+  packages_to_remove="$packages_to_remove @budibase/pro"
+fi
 
 package_json_path="$1"
 
