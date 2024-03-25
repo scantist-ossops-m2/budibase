@@ -1,13 +1,11 @@
 #!/bin/bash
 set -e
 
-if [[ -n $CI ]]
+if [[ -n $CPU_CORES ]]
 then
-  # --runInBand performs better in ci where resources are limited
-  echo "jest --coverage --runInBand --forceExit $@"
-  jest --coverage --runInBand --forceExit $@
+  echo "jest --coverage --max-workers=$CPU_CORES $@"
+  jest --coverage --max-workers=$CPU_CORES $@
 else
-  # --maxWorkers performs better in development
-  echo "jest --coverage --forceExit --detectOpenHandles $@"
-  jest --coverage --forceExit --detectOpenHandles $@
+  echo "jest --coverage --detectOpenHandles $@"
+  jest --coverage --detectOpenHandles $@
 fi

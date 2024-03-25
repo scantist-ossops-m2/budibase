@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
 
-if [[ -n $CI ]]
+if [[ -n $CPU_CORES ]]
 then
   # Running in ci, where resources are limited
-  echo "jest --coverage --maxWorkers=2 --forceExit --bail $@"
-  jest --coverage --maxWorkers=2 --forceExit --bail $@
+  echo "jest --coverage --maxWorkers=$CPU_CORES --bail $@"
+  jest --coverage --maxWorkers=$CPU_CORES --bail $@
 else
   # --maxWorkers performs better in development
   echo "jest --coverage --detectOpenHandles $@"
