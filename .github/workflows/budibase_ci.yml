@@ -104,13 +104,18 @@ jobs:
           node-version: 20.x
           cache: yarn
       - run: yarn --frozen-lockfile
+      - name: Get number of CPU cores
+        id: cpu-cores
+        uses: SimenB/github-actions-cpu-cores@v2
       - name: Test
         run: |
           if ${{ env.USE_NX_AFFECTED }}; then
             yarn test --ignore=@budibase/worker --ignore=@budibase/server --since=${{ env.NX_BASE_BRANCH }}
           else
-            yarn test --ignore=@budibase/worker --ignore=@budibase/server
+            yarn test --ignore=@budibase/worker --ignore=@budibase/server --concurrency
           fi
+        env:
+          CPU_CORES: ${{ steps.cpu-cores.outputs.count }}
 
   test-worker:
     runs-on: ubuntu-latest
@@ -128,6 +133,9 @@ jobs:
           node-version: 20.x
           cache: yarn
       - run: yarn --frozen-lockfile
+      - name: Get number of CPU cores
+        id: cpu-cores
+        uses: SimenB/github-actions-cpu-cores@v2
       - name: Test worker
         run: |
           if ${{ env.USE_NX_AFFECTED }}; then
@@ -135,6 +143,8 @@ jobs:
           else
             yarn test --scope=@budibase/worker
           fi
+        env:
+          CPU_CORES: ${{ steps.cpu-cores.outputs.count }}
 
   test-server:
     runs-on: ubuntu-latest
@@ -166,6 +176,10 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
+      - name: Get number of CPU cores
+        id: cpu-cores
+        uses: SimenB/github-actions-cpu-cores@v2
+
       - name: Test server
         run: |
           if ${{ env.USE_NX_AFFECTED }}; then
@@ -173,6 +187,8 @@ jobs:
           else
             yarn test --scope=@budibase/server
           fi
+        env:
+          CPU_CORES: ${{ steps.cpu-cores.outputs.count }}
 
   integration-test:
     runs-on: ubuntu-latest
