@@ -112,7 +112,7 @@ jobs:
           if ${{ env.USE_NX_AFFECTED }}; then
             yarn test --ignore=@budibase/worker --ignore=@budibase/server --since=${{ env.NX_BASE_BRANCH }}
           else
-            yarn test --ignore=@budibase/worker --ignore=@budibase/server --concurrency
+            yarn test --ignore=@budibase/worker --ignore=@budibase/server
           fi
         env:
           CPU_CORES: ${{ steps.cpu-cores.outputs.count }}
