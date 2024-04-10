@@ -192,7 +192,8 @@
                 max: setting.max ?? null,
 
                 // Field select settings
-                fieldValidator: setting.fieldValidator,
+                columnContext: setting.columnContext,
+                valueTypes: setting.valueTypes
               }}
               {bindings}
               {componentBindings}

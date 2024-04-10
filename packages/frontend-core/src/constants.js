@@ -113,3 +113,23 @@ export const ContextScopes = {
   Local: "local",
   Global: "global",
 }
+
+export const TypeIconMap = {
+  text: "Text",
+  options: "Dropdown",
+  datetime: "Date",
+  barcodeqr: "Camera",
+  longform: "TextAlignLeft",
+  array: "Dropdown",
+  number: "123",
+  boolean: "Boolean",
+  attachment: "AppleFiles",
+  link: "DataCorrelated",
+  formula: "Calculator",
+  json: "Brackets",
+  bigint: "TagBold",
+  bb_reference: {
+    user: "User",
+    users: "UserGroup",
+  },
+}
